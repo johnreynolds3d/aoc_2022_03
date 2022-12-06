@@ -6,33 +6,28 @@ fn main() -> Result<(), Box<dyn Error>> {
     let f = File::open("input.txt")?;
     let lines = BufReader::new(f).lines();
 
-    let mut comp1;
-    let mut comp2;
-    let mut score: u32 = 0;
+    let mut l1;
+    let mut l2;
+    let mut s: u32 = 0;
 
-    for line in lines {
-        let line = line.as_ref().unwrap();
-        comp1 = &line[0..line.len() / 2];
-        comp2 = &line[line.len() / 2..line.len()];
-        'outer: for c1 in comp1.chars() {
-            for c2 in comp2.chars() {
+    for l in lines {
+        let l = l.as_ref().unwrap();
+        l1 = &l[0..l.len() / 2];
+        l2 = &l[l.len() / 2..l.len()];
+        'outer: for c1 in l1.chars() {
+            for c2 in l2.chars() {
                 if c1 == c2 {
                     if (c1 as u32) < 96 {
-                        score += c1 as u32 - 38;
-                        println!("{} {}", comp1, comp2);
-                        println!("{} {} {}", c1, c1 as u32 - 38, score);
-                        break 'outer;
+                        s += c1 as u32 - 38;
                     } else {
-                        score += c1 as u32 - 96;
-                        println!("{} {}", comp1, comp2);
-                        println!("{} {} {}", c1, c1 as u32 - 96, score);
-                        break 'outer;
+                        s += c1 as u32 - 96;
                     }
+                    break 'outer;
                 }
             }
         }
     }
-    println!("Score: {}", score);
+    println!("Score: {}", s);
 
     Ok(())
 }
